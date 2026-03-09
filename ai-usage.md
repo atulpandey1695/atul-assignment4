@@ -183,7 +183,7 @@ I completed the full local implementation from the PDF requirements and verified
 
 Made changes.
 
-User: i have setup the minikube local system what will be the  next step?
+User: i have setup the minikube on my system what will be the next step?
 
 GitHub Copilot: You’ve got Minikube ready, so I’ll quickly verify cluster/tool readiness and then give you the exact next commands to deploy the stack in order.
 
