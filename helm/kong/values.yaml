@@ -1,0 +1,35 @@
+kong:
+  image:
+    repository: kong
+    tag: "3.6"
+    pullPolicy: IfNotPresent
+  proxyService:
+    type: ClusterIP
+    port: 80
+    targetPort: 8000
+  adminService:
+    type: ClusterIP
+    port: 8001
+  jwt:
+    key: local-dev-key
+    secret: change-me
+  ipWhitelist:
+    - 0.0.0.0/0
+  rateLimit:
+    minute: 10
+
+envoy:
+  image:
+    repository: envoyproxy/envoy
+    tag: v1.31-latest
+    pullPolicy: IfNotPresent
+  service:
+    type: NodePort
+    port: 80
+    targetPort: 10000
+    nodePort: 30080
+  ddos:
+    maxConnections: 100
+    maxPendingRequests: 100
+    maxRequestsPerConnection: 50
+    localRateLimitPerMinute: 120

@@ -1,0 +1,44 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: "{{ .Values.image.repository }}:{{ .Values.image.tag }}"
+          imagePullPolicy: {{ .Values.image.pullPolicy }}
+          ports:
+            - containerPort: 5000
+          env:
+            - name: DB_PATH
+              value: /data/sqlite.db
+            - name: JWT_ALGORITHM
+              value: "{{ .Values.jwt.algorithm }}"
+            - name: JWT_EXPIRE_MINUTES
+              value: "{{ .Values.jwt.expireMinutes }}"
+            - name: JWT_ISSUER
+              value: "{{ .Values.jwt.issuer }}"
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-jwt
+                  key: jwtSecret
+          volumeMounts:
+            - name: user-db
+              mountPath: /data
+          resources:
+{{ toYaml .Values.resources | indent 12 }}
+      volumes:
+        - name: user-db
+          emptyDir: {}

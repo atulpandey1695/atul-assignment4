@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: user-service
+  tag: local
+  pullPolicy: IfNotPresent
+
+service:
+  type: ClusterIP
+  port: 5000
+
+jwt:
+  secret: change-me
+  algorithm: HS256
+  expireMinutes: 60
+  issuer: local-dev-key
+
+resources: {}

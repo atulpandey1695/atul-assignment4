@@ -1,0 +1,29 @@
+# Logs
+*.log
+
+# Archives
+*.zip
+*.tar
+*.gz
+
+# Build output
+dist/
+build/
+target/
+
+# Dependency folders
+node_modules/
+
+# IDE files
+.vscode/
+.idea/
+
+# OS files
+.DS_Store
+
+# Kubernetes artifacts
+*.tgz
+
+# Large data
+data/
+#*.db

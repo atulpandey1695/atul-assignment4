@@ -1,0 +1,25 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-proxy
+spec:
+  type: {{ .Values.kong.proxyService.type }}
+  selector:
+    app: kong
+  ports:
+    - name: proxy
+      port: {{ .Values.kong.proxyService.port }}
+      targetPort: {{ .Values.kong.proxyService.targetPort }}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: kong-admin
+spec:
+  type: {{ .Values.kong.adminService.type }}
+  selector:
+    app: kong
+  ports:
+    - name: admin
+      port: {{ .Values.kong.adminService.port }}
+      targetPort: 8001

@@ -1,0 +1,47 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: user-service
+  labels:
+    app: user-service
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: user-service
+  template:
+    metadata:
+      labels:
+        app: user-service
+    spec:
+      containers:
+        - name: user-service
+          image: user-service:local
+          imagePullPolicy: IfNotPresent
+          env:
+            - name: DB_PATH
+              value: /data/sqlite.db
+            - name: JWT_SECRET
+              valueFrom:
+                secretKeyRef:
+                  name: user-service-jwt
+                  key: jwtSecret
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: user-db
+              mountPath: /data
+      volumes:
+        - name: user-db
+          emptyDir: {}
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: user-service
+spec:
+  selector:
+    app: user-service
+  ports:
+    - port: 5000
+      targetPort: 5000

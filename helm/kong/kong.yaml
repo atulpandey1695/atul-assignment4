@@ -1,0 +1,6 @@
+_format_version: "3.0"
+_transform: true
+
+# Reference snapshot of Kong declarative config.
+# The deployed config is rendered via Helm template:
+# helm/kong/templates/kong-configmap.yaml
